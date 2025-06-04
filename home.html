@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weatherweb</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="container">
+        
+        <header class="header">
+            <nav class="navbar">
+                <h1 class="logo">
+                    WEATHER
+                </h1>
+                <input type="checkbox" name="" id="checkbox">
+                
+                <div class="btn_1">
+                    <label for="checkbox">
+                        <i class="fa-solid fa-bars"></i>
+                    </label>
+
+                </div>
+
+                <nav class="nav_item">
+                    <ul>
+                        <li><a href="home.html" class="nav-link">home</a></li>
+                        <!-- <li><a href="about.html" class="nav-link">about developer</a></li> -->
+                        <li><a href="contact.html" class="nav-link">contact developer</a></li>
+                    </ul>
+                </nav>
+                
+
+                <nav class="sidebar_menu">
+                    <div class="btn_2">
+                        <label for="checkbox">
+                            <i class="fa-solid fa-xmark"></i>
+                        </label>
+    
+    
+                    </div>
+                    <ul>
+                        <li><a href="home.html">home</a></li>
+                        <!-- <li><a href="about.html">about developer</a></li> -->
+                        <li><a href="contact.html">contact developer</a></li>
+                        
+                    </ul>
+
+
+                </nav>
+
+
+
+            </nav>
+
+
+
+           <section class="searchBar">
+                <div class="searchBox">
+                    <input type="text" name="" id="inputbox" placeholder="Enter your city">
+                </div>
+                <div class="searchBtn">
+                    <button id="searchBtn"><i class="fa-solid fa-magnifying-glass-location"></i></button>
+                </div>
+           </section>
+           
+
+        </header>
+        <main class="main">
+            <section>
+           <marquee direction="left">
+            <span><i class="fa-solid fa-triangle-exclamation"></i></span>
+            <span class="description"></span>
+           </marquee>
+           </section>
+
+           <div class="clockContainer">
+
+             <div class="dateContainer">
+            
+             </div>
+
+            <div class="clock">
+            <div class="hours">
+                
+
+            </div>
+            <div class="min">
+                
+
+            </div>
+            <div class="sec">
+
+                
+
+            </div>
+            <div class="AmPm">
+                    
+
+            </div>
+                
+             </div>
+
+         </div>
+
+        
+
+            <section class="card_container">
+
+                <section class="card_1">
+                    <div>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span class="citylocation">City</span>
+                        
+                    </div>
+                    <div class="countrylocation"></div>
+                    
+
+                </section>
+                <section class="card_2">
+                    
+                       
+                    
+                    <section class="data">
+                        
+                       <table>
+                        <tr>
+                            <td colspan="2">
+                               <h1 style="color: red;">Now</h1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> <span>Description:</span></td>
+                            <td><i class="fa-regular fa-hand-point-right"></i></td>
+                            <td> <span class="description1"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span>Temperature:</span></td>
+                            <td><i class="fa-solid fa-temperature-high"></i></td>
+                            <td><span class="temperature"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span>Humidity:</span></td>
+                            <td><i class="fa-solid fa-smog"></i> </td>
+                            <td><span class="humidity"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span>Wind:</span></td>
+                            <td><i class="fa-solid fa-wind"></i></td>
+                            <td><span class="wind"></span></td>
+                        </tr>
+                       
+                       </table>
+                      
+                     
+                        
+                       
+                        
+                    </section>
+                    
+                  
+                
+
+                  
+                   
+                </section>
+                <section class="card_3">
+                    <h1>Sunrise:<div class="sunrise"></div></h1>
+                    <h1>Sunset:<div class="sunset"></div></h1>
+                </section>
+               <section class="image_data">
+                <img src="" class="weather_img" alt="" srcset="">
+               
+               </section>
+               <section class="pop">
+                
+                    <table>
+                        <tr>
+                            <td><span class="probtxt">Probability<i class="fa-solid fa-cloud-rain"></i></span></td>
+                           
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="popdata"></span> 
+                            </td>
+                        </tr>
+                    </table>
+               </section>
+               <section class="forecast">
+               </section>
+              
+               
+
+               
+                <div class="card_4">
+                    <div>
+                        <tr>
+                            <td>
+                                <div class="timecard_4"></div>
+    
+                            </td>
+                        </tr>
+                    </div>
+                   <div>
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-droplet"></i>
+                        </td>
+                        <td>
+                            <span class="forecastpopcard_4"></span>
+                        </td>
+                    </tr>
+                   </div>
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-temperature-high"></i>
+                            </td>
+                            <td>
+                                <span class="forecasttempcard_4"></span>
+                               
+                            </td>
+                        </tr>
+                        
+                    </div>
+                    
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-wind"></i>
+
+                                <span class="forecastwindcard_4"></span>
+                            </td>
+                        </tr>
+                    </div>
+                    <span class="weather_img1">
+                      
+                    </span>
+
+                </div>
+
+                <!-- card5 -->
+                <div class="card_5">
+                    <div>
+                        <tr>
+                            <td>
+                                <div class="timecard_5"></div>
+    
+                            </td>
+                        </tr>
+                    </div>
+                   <div>
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-droplet"></i>
+                        </td>
+                        <td>
+                            <span class="forecastpopcard_5"></span>
+                        </td>
+                    </tr>
+                   </div>
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-temperature-high"></i>
+                            </td>
+                            <td>
+                                <span class="forecasttempcard_5"></span>
+                               
+                            </td>
+                        </tr>
+                        
+                    </div>
+                    
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-wind"></i>
+
+                                <span class="forecastwindcard_5"></span>
+                            </td>
+                        </tr>
+                    </div>
+                    <span class="weather_img2">
+                      
+                    </span>
+
+                </div>
+
+                <!-- card6 -->
+                <div class="card_6">
+                    <div>
+                        <tr>
+                            <td>
+                                <div class="timecard_6"></div>
+    
+                            </td>
+                        </tr>
+                    </div>
+                   <div>
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-droplet"></i>
+                        </td>
+                        <td>
+                            <span class="forecastpopcard_6"></span>
+                        </td>
+                    </tr>
+                   </div>
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-temperature-high"></i>
+                            </td>
+                            <td>
+                                <span class="forecasttempcard_6"></span>
+                               
+                            </td>
+                        </tr>
+                        
+                    </div>
+                    
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-wind"></i>
+
+                                <span class="forecastwindcard_6"></span>
+                            </td>
+                        </tr>
+                    </div>
+                    <span class="weather_img3">
+                      
+                    </span>
+
+                </div>
+                <!-- card7 -->
+
+                <div class="card_7">
+                    <div>
+                        <tr>
+                            <td>
+                                <div class="timecard_7"></div>
+    
+                            </td>
+                        </tr>
+                    </div>
+                   <div>
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-droplet"></i>
+                        </td>
+                        <td>
+                            <span class="forecastpopcard_7"></span>
+                        </td>
+                    </tr>
+                   </div>
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-temperature-high"></i>
+                            </td>
+                            <td>
+                                <span class="forecasttempcard_7"></span>
+                               
+                            </td>
+                        </tr>
+                        
+                    </div>
+                    
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-wind"></i>
+
+                                <span class="forecastwindcard_7"></span>
+                            </td>
+                        </tr>
+                    </div>
+                    <span class="weather_img4">
+                      
+                    </span>
+
+                </div>
+
+
+                <!-- card8 -->
+                <div class="card_8">
+                    <div>
+                        <tr>
+                            <td>
+                                <div class="timecard_8"></div>
+    
+                            </td>
+                        </tr>
+                    </div>
+                   <div>
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-droplet"></i>
+                        </td>
+                        <td>
+                            <span class="forecastpopcard_8"></span>
+                        </td>
+                    </tr>
+                   </div>
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-temperature-high"></i>
+                            </td>
+                            <td>
+                                <span class="forecasttempcard_8"></span>
+                               
+                            </td>
+                        </tr>
+                        
+                    </div>
+                    
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-wind"></i>
+
+                                <span class="forecastwindcard_8"></span>
+                            </td>
+                        </tr>
+                    </div>
+                    <span class="weather_img5">
+                      
+                    </span>
+
+                </div>
+
+                <!-- card9 -->
+                <div class="card_9">
+                    <div>
+                        <tr>
+                            <td>
+                                <div class="timecard_9"></div>
+    
+                            </td>
+                        </tr>
+                    </div>
+                   <div>
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-droplet"></i>
+                        </td>
+                        <td>
+                            <span class="forecastpopcard_9"></span>
+                        </td>
+                    </tr>
+                   </div>
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-temperature-high"></i>
+                            </td>
+                            <td>
+                                <span class="forecasttempcard_9"></span>
+                               
+                            </td>
+                        </tr>
+                        
+                    </div>
+                    
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-wind"></i>
+
+                                <span class="forecastwindcard_9"></span>
+                            </td>
+                        </tr>
+                    </div>
+                    <span class="weather_img6">
+                      
+                    </span>
+
+                </div>
+
+
+                <!-- card10 -->
+                <div class="card_10">
+                    <div>
+                        <tr>
+                            <td>
+                                <div class="timecard_10"></div>
+    
+                            </td>
+                        </tr>
+                    </div>
+                   <div>
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-droplet"></i>
+                        </td>
+                        <td>
+                            <span class="forecastpopcard_10"></span>
+                        </td>
+                    </tr>
+                   </div>
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-temperature-high"></i>
+                            </td>
+                            <td>
+                                <span class="forecasttempcard_10"></span>
+                               
+                            </td>
+                        </tr>
+                        
+                    </div>
+                    
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-wind"></i>
+
+                                <span class="forecastwindcard_10"></span>
+                            </td>
+                        </tr>
+                    </div>
+                    <span class="weather_img7">
+                      
+                    </span>
+
+                </div>
+
+                <!-- card11 -->
+                <div class="card_11">
+                    <div>
+                        <tr>
+                            <td>
+                                <div class="timecard_11"></div>
+    
+                            </td>
+                        </tr>
+                    </div>
+                   <div>
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-droplet"></i>
+                        </td>
+                        <td>
+                            <span class="forecastpopcard_11"></span>
+                        </td>
+                    </tr>
+                   </div>
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-temperature-high"></i>
+                            </td>
+                            <td>
+                                <span class="forecasttempcard_11"></span>
+                               
+                            </td>
+                        </tr>
+                        
+                    </div>
+                    
+                    <div>
+                        <tr>
+                            <td>
+                                <i class="fa-solid fa-wind"></i>
+
+                                <span class="forecastwindcard_11"></span>
+                            </td>
+                        </tr>
+                    </div>
+                    <span class="weather_img8">
+                      
+                    </span>
+
+                </div>
+                <div id="map"></div>
+
+            
+
+                
+            </section>
+           
+        </main>
+        <footer class="footer">
+
+            <section class="footer_message">
+                Feel free to review the project and let me know if we can schedule a time to discuss further.
+                Thank you for your time, and I look forward to connecting with you!
+
+
+            </section>
+
+
+        </footer>
+    </section>
+   
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
