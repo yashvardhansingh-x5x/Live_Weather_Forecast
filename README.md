@@ -7,7 +7,8 @@
 
 ## 🔗 Live Demo
 
-🚀 [Click here to view the live app](https://yashvardhansingh-x5x.github.io/Live_Weather_Forecast)
+👉 [Click here to view the live app](https://yashvardhansingh-x5x.github.io/Live_Weather_Forecast/)
+
 
 ---
 
