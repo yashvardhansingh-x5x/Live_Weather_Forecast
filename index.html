@@ -1,612 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weatherweb</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkyCast — Live Weather</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@300;400;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-<body>
-    <section class="container">
-        
-        <header class="header">
-            <nav class="navbar">
-                <h1 class="logo">
-                    WEATHER
-                </h1>
-                <input type="checkbox" name="" id="checkbox">
-                
-                <div class="btn_1">
-                    <label for="checkbox">
-                        <i class="fa-solid fa-bars"></i>
-                    </label>
+<body class="weather-clear">
 
-                </div>
+<canvas id="skyCanvas"></canvas>
+<div class="aurora">
+  <div class="aurora-blob blob-1"></div>
+  <div class="aurora-blob blob-2"></div>
+  <div class="aurora-blob blob-3"></div>
+</div>
+<div class="grain"></div>
 
-                <nav class="nav_item">
-                    <ul>
-                        <li><a href="home.html" class="nav-link">home</a></li>
-                        <!-- <li><a href="about.html" class="nav-link">about developer</a></li> -->
-                        <li><a href="contact.html" class="nav-link">contact developer</a></li>
-                    </ul>
-                </nav>
-                
+<div class="shell">
 
-                <nav class="sidebar_menu">
-                    <div class="btn_2">
-                        <label for="checkbox">
-                            <i class="fa-solid fa-xmark"></i>
-                        </label>
-    
-    
-                    </div>
-                    <ul>
-                        <li><a href="home.html">home</a></li>
-                        <!-- <li><a href="about.html">about developer</a></li> -->
-                        <li><a href="contact.html">contact developer</a></li>
-                        
-                    </ul>
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10.5" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M7 14c1.2-3.5 4.5-5.5 7.5-3.5s4.5 1 4.5-2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="currentColor" opacity="0.3"/>
+      </svg>
+      SkyCast
+    </a>
+    <input type="checkbox" id="nav-toggle" hidden/>
+    <ul class="nav-list">
+      <li><a href="index.html" class="nav-a active">Home</a></li>
+      <li><a href="contact.html" class="nav-a">Contact</a></li>
+    </ul>
+    <label for="nav-toggle" class="nav-burger"><i class="fa-solid fa-bars"></i></label>
+    <div class="nav-drawer">
+      <label for="nav-toggle" class="nav-close"><i class="fa-solid fa-xmark"></i></label>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
 
+  <section class="hero">
+    <div class="hero-search">
+      <div class="search-pill">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="inputbox" placeholder="Search city…" autocomplete="off" spellcheck="false"/>
+        <span class="kbd-hint">/</span>
+        <button id="searchBtn" class="ripple-btn"><i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+      <button class="loc-pill ripple-btn" id="locateBtn" title="Use my location">
+        <i class="fa-solid fa-location-crosshairs"></i>
+      </button>
+    </div>
+  </section>
 
-                </nav>
+  <div class="loader-wrap" id="loaderWrap">
+    <div class="loader-rings">
+      <div class="lr lr1"></div>
+      <div class="lr lr2"></div>
+      <div class="lr lr3"></div>
+    </div>
+    <p class="loader-text">Reading the sky<span class="dot-anim"></span></p>
+  </div>
 
+  <div class="err-wrap" id="errWrap" style="display:none">
+    <div class="err-inner glass tilt-card">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <p id="errMsg">Something went wrong.</p>
+      <button class="ripple-btn err-dismiss" onclick="document.getElementById('errWrap').style.display='none'">Dismiss</button>
+    </div>
+  </div>
 
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+  <!-- SCROLL TO TOP -->
+  <button class="scroll-top ripple-btn" id="scrollTopBtn" title="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
 
-            </nav>
+  <div class="content" id="content" style="display:none">
 
+    <div class="ticker"><div class="ticker-track" id="tickerInner">—</div></div>
 
-
-           <section class="searchBar">
-                <div class="searchBox">
-                    <input type="text" name="" id="inputbox" placeholder="Enter your city">
-                </div>
-                <div class="searchBtn">
-                    <button id="searchBtn"><i class="fa-solid fa-magnifying-glass-location"></i></button>
-                </div>
-           </section>
-           
-
-        </header>
-        <main class="main">
-            <section>
-           <marquee direction="left">
-            <span><i class="fa-solid fa-triangle-exclamation"></i></span>
-            <span class="description"></span>
-           </marquee>
-           </section>
-
-           <div class="clockContainer">
-
-             <div class="dateContainer">
-            
-             </div>
-
-            <div class="clock">
-            <div class="hours">
-                
-
-            </div>
-            <div class="min">
-                
-
-            </div>
-            <div class="sec">
-
-                
-
-            </div>
-            <div class="AmPm">
-                    
-
-            </div>
-                
-             </div>
-
-         </div>
-
-        
-
-            <section class="card_container">
-
-                <section class="card_1">
-                    <div>
-                        <i class="fa-solid fa-location-dot"></i>
-                        <span class="citylocation">City</span>
-                        
-                    </div>
-                    <div class="countrylocation"></div>
-                    
-
-                </section>
-                <section class="card_2">
-                    
-                       
-                    
-                    <section class="data">
-                        
-                       <table>
-                        <tr>
-                            <td colspan="2">
-                               <h1 style="color: red;">Now</h1>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> <span>Description:</span></td>
-                            <td><i class="fa-regular fa-hand-point-right"></i></td>
-                            <td> <span class="description1"></span></td>
-                        </tr>
-                        <tr>
-                            <td><span>Temperature:</span></td>
-                            <td><i class="fa-solid fa-temperature-high"></i></td>
-                            <td><span class="temperature"></span></td>
-                        </tr>
-                        <tr>
-                            <td><span>Humidity:</span></td>
-                            <td><i class="fa-solid fa-smog"></i> </td>
-                            <td><span class="humidity"></span></td>
-                        </tr>
-                        <tr>
-                            <td><span>Wind:</span></td>
-                            <td><i class="fa-solid fa-wind"></i></td>
-                            <td><span class="wind"></span></td>
-                        </tr>
-                       
-                       </table>
-                      
-                     
-                        
-                       
-                        
-                    </section>
-                    
-                  
-                
-
-                  
-                   
-                </section>
-                <section class="card_3">
-                    <h1>Sunrise:<div class="sunrise"></div></h1>
-                    <h1>Sunset:<div class="sunset"></div></h1>
-                </section>
-               <section class="image_data">
-                <img src="" class="weather_img" alt="" srcset="">
-               
-               </section>
-               <section class="pop">
-                
-                    <table>
-                        <tr>
-                            <td><span class="probtxt">Probability<i class="fa-solid fa-cloud-rain"></i></span></td>
-                           
-                            
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="popdata"></span> 
-                            </td>
-                        </tr>
-                    </table>
-               </section>
-               <section class="forecast">
-               </section>
-              
-               
-
-               
-                <div class="card_4">
-                    <div>
-                        <tr>
-                            <td>
-                                <div class="timecard_4"></div>
-    
-                            </td>
-                        </tr>
-                    </div>
-                   <div>
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-droplet"></i>
-                        </td>
-                        <td>
-                            <span class="forecastpopcard_4"></span>
-                        </td>
-                    </tr>
-                   </div>
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-temperature-high"></i>
-                            </td>
-                            <td>
-                                <span class="forecasttempcard_4"></span>
-                               
-                            </td>
-                        </tr>
-                        
-                    </div>
-                    
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-wind"></i>
-
-                                <span class="forecastwindcard_4"></span>
-                            </td>
-                        </tr>
-                    </div>
-                    <span class="weather_img1">
-                      
-                    </span>
-
-                </div>
-
-                <!-- card5 -->
-                <div class="card_5">
-                    <div>
-                        <tr>
-                            <td>
-                                <div class="timecard_5"></div>
-    
-                            </td>
-                        </tr>
-                    </div>
-                   <div>
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-droplet"></i>
-                        </td>
-                        <td>
-                            <span class="forecastpopcard_5"></span>
-                        </td>
-                    </tr>
-                   </div>
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-temperature-high"></i>
-                            </td>
-                            <td>
-                                <span class="forecasttempcard_5"></span>
-                               
-                            </td>
-                        </tr>
-                        
-                    </div>
-                    
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-wind"></i>
-
-                                <span class="forecastwindcard_5"></span>
-                            </td>
-                        </tr>
-                    </div>
-                    <span class="weather_img2">
-                      
-                    </span>
-
-                </div>
-
-                <!-- card6 -->
-                <div class="card_6">
-                    <div>
-                        <tr>
-                            <td>
-                                <div class="timecard_6"></div>
-    
-                            </td>
-                        </tr>
-                    </div>
-                   <div>
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-droplet"></i>
-                        </td>
-                        <td>
-                            <span class="forecastpopcard_6"></span>
-                        </td>
-                    </tr>
-                   </div>
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-temperature-high"></i>
-                            </td>
-                            <td>
-                                <span class="forecasttempcard_6"></span>
-                               
-                            </td>
-                        </tr>
-                        
-                    </div>
-                    
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-wind"></i>
-
-                                <span class="forecastwindcard_6"></span>
-                            </td>
-                        </tr>
-                    </div>
-                    <span class="weather_img3">
-                      
-                    </span>
-
-                </div>
-                <!-- card7 -->
-
-                <div class="card_7">
-                    <div>
-                        <tr>
-                            <td>
-                                <div class="timecard_7"></div>
-    
-                            </td>
-                        </tr>
-                    </div>
-                   <div>
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-droplet"></i>
-                        </td>
-                        <td>
-                            <span class="forecastpopcard_7"></span>
-                        </td>
-                    </tr>
-                   </div>
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-temperature-high"></i>
-                            </td>
-                            <td>
-                                <span class="forecasttempcard_7"></span>
-                               
-                            </td>
-                        </tr>
-                        
-                    </div>
-                    
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-wind"></i>
-
-                                <span class="forecastwindcard_7"></span>
-                            </td>
-                        </tr>
-                    </div>
-                    <span class="weather_img4">
-                      
-                    </span>
-
-                </div>
-
-
-                <!-- card8 -->
-                <div class="card_8">
-                    <div>
-                        <tr>
-                            <td>
-                                <div class="timecard_8"></div>
-    
-                            </td>
-                        </tr>
-                    </div>
-                   <div>
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-droplet"></i>
-                        </td>
-                        <td>
-                            <span class="forecastpopcard_8"></span>
-                        </td>
-                    </tr>
-                   </div>
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-temperature-high"></i>
-                            </td>
-                            <td>
-                                <span class="forecasttempcard_8"></span>
-                               
-                            </td>
-                        </tr>
-                        
-                    </div>
-                    
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-wind"></i>
-
-                                <span class="forecastwindcard_8"></span>
-                            </td>
-                        </tr>
-                    </div>
-                    <span class="weather_img5">
-                      
-                    </span>
-
-                </div>
-
-                <!-- card9 -->
-                <div class="card_9">
-                    <div>
-                        <tr>
-                            <td>
-                                <div class="timecard_9"></div>
-    
-                            </td>
-                        </tr>
-                    </div>
-                   <div>
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-droplet"></i>
-                        </td>
-                        <td>
-                            <span class="forecastpopcard_9"></span>
-                        </td>
-                    </tr>
-                   </div>
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-temperature-high"></i>
-                            </td>
-                            <td>
-                                <span class="forecasttempcard_9"></span>
-                               
-                            </td>
-                        </tr>
-                        
-                    </div>
-                    
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-wind"></i>
-
-                                <span class="forecastwindcard_9"></span>
-                            </td>
-                        </tr>
-                    </div>
-                    <span class="weather_img6">
-                      
-                    </span>
-
-                </div>
-
-
-                <!-- card10 -->
-                <div class="card_10">
-                    <div>
-                        <tr>
-                            <td>
-                                <div class="timecard_10"></div>
-    
-                            </td>
-                        </tr>
-                    </div>
-                   <div>
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-droplet"></i>
-                        </td>
-                        <td>
-                            <span class="forecastpopcard_10"></span>
-                        </td>
-                    </tr>
-                   </div>
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-temperature-high"></i>
-                            </td>
-                            <td>
-                                <span class="forecasttempcard_10"></span>
-                               
-                            </td>
-                        </tr>
-                        
-                    </div>
-                    
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-wind"></i>
-
-                                <span class="forecastwindcard_10"></span>
-                            </td>
-                        </tr>
-                    </div>
-                    <span class="weather_img7">
-                      
-                    </span>
-
-                </div>
-
-                <!-- card11 -->
-                <div class="card_11">
-                    <div>
-                        <tr>
-                            <td>
-                                <div class="timecard_11"></div>
-    
-                            </td>
-                        </tr>
-                    </div>
-                   <div>
-                    <tr>
-                        <td>
-                            <i class="fa-solid fa-droplet"></i>
-                        </td>
-                        <td>
-                            <span class="forecastpopcard_11"></span>
-                        </td>
-                    </tr>
-                   </div>
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-temperature-high"></i>
-                            </td>
-                            <td>
-                                <span class="forecasttempcard_11"></span>
-                               
-                            </td>
-                        </tr>
-                        
-                    </div>
-                    
-                    <div>
-                        <tr>
-                            <td>
-                                <i class="fa-solid fa-wind"></i>
-
-                                <span class="forecastwindcard_11"></span>
-                            </td>
-                        </tr>
-                    </div>
-                    <span class="weather_img8">
-                      
-                    </span>
-
-                </div>
-                <div id="map"></div>
-
-            
-
-                
-            </section>
-           
-        </main>
-        <footer class="footer">
-
-            <section class="footer_message">
-                Feel free to review the project and let me know if we can schedule a time to discuss further.
-                Thank you for your time, and I look forward to connecting with you!
-
-
-            </section>
-
-
-        </footer>
+    <!-- HERO CARD -->
+    <section class="hero-card glass tilt-card reveal" style="--d:.04s">
+      <div class="hc-shimmer"></div>
+      <div class="hc-left">
+        <div class="hc-loc">
+          <i class="fa-solid fa-location-dot pulse-dot"></i>
+          <span id="cityName">—</span>
+          <span class="hc-country" id="countryName"></span>
+        </div>
+        <div class="hc-temp-row">
+          <div class="hc-temp" id="tempDisplay">—</div>
+          <div class="unit-switch">
+            <button class="u-btn active ripple-btn" id="btnC">°C</button>
+            <span class="u-sep">/</span>
+            <button class="u-btn ripple-btn" id="btnF">°F</button>
+          </div>
+        </div>
+        <div class="hc-desc" id="weatherDesc">—</div>
+        <div class="hc-stats">
+          <div class="hs tilt-card"><div class="hs-icon"><i class="fa-solid fa-droplet"></i></div><span id="humVal">—</span><label>Humidity</label></div>
+          <div class="hs tilt-card"><div class="hs-icon"><i class="fa-solid fa-wind"></i></div><span id="windVal">—</span><label>Wind</label></div>
+          <div class="hs tilt-card"><div class="hs-icon"><i class="fa-solid fa-temperature-low"></i></div><span id="feelsVal">—</span><label>Feels like</label></div>
+          <div class="hs tilt-card"><div class="hs-icon"><i class="fa-solid fa-eye"></i></div><span id="visVal">—</span><label>Visibility</label></div>
+        </div>
+      </div>
+      <div class="hc-right">
+        <div class="hc-icon-giant" id="bigIcon"></div>
+        <div class="hc-clock">
+          <div class="hc-time">
+            <span id="ch">00</span><span class="colon-blink">:</span><span id="cm">00</span><span class="colon-blink">:</span><span id="cs">00</span>
+            <span class="hc-ampm" id="camp">AM</span>
+          </div>
+          <div class="hc-date" id="hdate"></div>
+        </div>
+        <div class="sun-bars">
+          <div class="sb-row"><i class="fa-solid fa-sun sb-rise"></i><div class="sb-info"><label>Sunrise</label><span id="sriseVal">—</span></div></div>
+          <div class="sb-row"><i class="fa-solid fa-moon sb-set"></i><div class="sb-info"><label>Sunset</label><span id="ssetVal">—</span></div></div>
+          <div class="sb-row"><i class="fa-solid fa-cloud-rain sb-rain"></i><div class="sb-info"><label>Rain Chance</label><span id="popVal">—</span></div></div>
+        </div>
+      </div>
     </section>
-   
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    
-    <script src="script.js"></script>
+
+
+    <!-- 24H TEMPERATURE SPARKLINE -->
+    <section class="section-wrap reveal">
+      <h2 class="section-head"><span class="sh-line"></span>24h Temperature Trend<span class="sh-line"></span></h2>
+      <div class="glass tilt-card sparkline-card">
+        <div class="hc-shimmer"></div>
+        <canvas id="sparklineCanvas"></canvas>
+        <div class="sparkline-labels" id="sparklineLabels"></div>
+      </div>
+    </section>
+
+    <!-- HOURLY FORECAST -->
+    <section class="section-wrap reveal">
+      <h2 class="section-head"><span class="sh-line"></span>Hourly Forecast<span class="sh-line"></span></h2>
+      <div class="forecast-row" id="forecastRow"></div>
+    </section>
+
+    <!-- GAUGE ROW -->
+    <section class="gauge-row reveal">
+
+      <div class="glass gauge-card tilt-card">
+        <div class="hc-shimmer"></div>
+        <p class="gauge-label">Humidity</p>
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 120 80">
+            <path class="gauge-track" d="M10,70 A50,50 0 0,1 110,70" stroke-width="9" fill="none"/>
+            <path class="gauge-fill g-blue" id="humGaugeFill" d="M10,70 A50,50 0 0,1 110,70" stroke-width="9" fill="none" stroke-dasharray="157" stroke-dashoffset="157" stroke-linecap="round"/>
+          </svg>
+          <div class="gauge-center"><span id="humGaugeVal" class="counter-num">0</span><small>%</small></div>
+        </div>
+        <p class="gauge-sub" id="humSub">—</p>
+      </div>
+
+      <div class="glass gauge-card tilt-card compass-card">
+        <div class="hc-shimmer"></div>
+        <p class="gauge-label">Wind Direction</p>
+        <div class="compass-wrap">
+          <!-- BUG 9 FIX: compass-ring is NOT a tilt-card so the needle rotation
+               is never overridden by the tilt event delegation -->
+          <div class="compass-ring">
+            <span class="cp-dir cp-n">N</span><span class="cp-dir cp-e">E</span>
+            <span class="cp-dir cp-s">S</span><span class="cp-dir cp-w">W</span>
+            <div class="compass-needle-wrap" id="compassNeedle">
+              <div class="cn-top"></div>
+              <div class="cn-bot"></div>
+            </div>
+          </div>
+          <div class="compass-vals">
+            <span id="compassDirText">—</span>
+            <small id="compassDeg">0°</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass gauge-card tilt-card">
+        <div class="hc-shimmer"></div>
+        <p class="gauge-label">Pressure</p>
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 120 80">
+            <path class="gauge-track" d="M10,70 A50,50 0 0,1 110,70" stroke-width="9" fill="none"/>
+            <path class="gauge-fill g-green" id="presGaugeFill" d="M10,70 A50,50 0 0,1 110,70" stroke-width="9" fill="none" stroke-dasharray="157" stroke-dashoffset="157" stroke-linecap="round"/>
+          </svg>
+          <div class="gauge-center"><span id="presGaugeVal" class="counter-num">0</span><small>hPa</small></div>
+        </div>
+        <p class="gauge-sub" id="presSub">—</p>
+      </div>
+
+      <div class="glass gauge-card tilt-card">
+        <div class="hc-shimmer"></div>
+        <p class="gauge-label">Cloud Cover</p>
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 120 80">
+            <path class="gauge-track" d="M10,70 A50,50 0 0,1 110,70" stroke-width="9" fill="none"/>
+            <path class="gauge-fill g-muted" id="cloudGaugeFill" d="M10,70 A50,50 0 0,1 110,70" stroke-width="9" fill="none" stroke-dasharray="157" stroke-dashoffset="157" stroke-linecap="round"/>
+          </svg>
+          <div class="gauge-center"><span id="cloudGaugeVal" class="counter-num">0</span><small>%</small></div>
+        </div>
+        <p class="gauge-sub" id="cloudSub">—</p>
+      </div>
+
+
+      <div class="glass gauge-card tilt-card">
+        <div class="hc-shimmer"></div>
+        <p class="gauge-label">UV Index</p>
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 120 80">
+            <path class="gauge-track" d="M10,70 A50,50 0 0,1 110,70" stroke-width="9" fill="none"/>
+            <path class="gauge-fill" id="uvGaugeFill" d="M10,70 A50,50 0 0,1 110,70" stroke-width="9" fill="none" stroke-dasharray="157" stroke-dashoffset="157" stroke-linecap="round"/>
+          </svg>
+          <div class="gauge-center"><span id="uvGaugeVal" class="counter-num">—</span><small>/ 11</small></div>
+        </div>
+        <p class="gauge-sub" id="uvSub">—</p>
+      </div>
+
+    </section>
+
+    <!-- 5-DAY FORECAST -->
+    <section class="section-wrap reveal">
+      <h2 class="section-head"><span class="sh-line"></span>6-Day Outlook<span class="sh-line"></span></h2>
+      <div class="days-grid" id="daysGrid"></div>
+    </section>
+
+    <!-- MAP -->
+    <section class="section-wrap reveal">
+      <h2 class="section-head"><span class="sh-line"></span>Precipitation Map<span class="sh-line"></span></h2>
+      <div class="glass map-outer tilt-card">
+        <div class="hc-shimmer"></div>
+        <div id="map"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="foot">
+    <div class="foot-inner">
+      <span>SkyCast &copy; 2025</span>
+      <span class="foot-dot">·</span>
+      <a href="contact.html">Contact Developer</a>
+      <span class="foot-dot">·</span>
+      <span>Data: OpenWeatherMap</span>
+    </div>
+  </footer>
+
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

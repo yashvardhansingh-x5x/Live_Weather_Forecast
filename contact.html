@@ -1,125 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact | SkyCast</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@300;400;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="navbar">
-                <h1 class="logo">
-                    WEATHER
-                </h1>
-                <input type="checkbox" name="" id="checkbox">
-                
-                <div class="btn_1">
-                    <label for="checkbox">
-                        <i class="fa-solid fa-bars"></i>
-                    </label>
+<body class="weather-clear">
 
-                </div>
+<canvas id="skyCanvas"></canvas>
+<div class="aurora">
+  <div class="aurora-blob blob-1"></div>
+  <div class="aurora-blob blob-2"></div>
+  <div class="aurora-blob blob-3"></div>
+</div>
+<div class="grain"></div>
 
-                <div class="nav_item">
-                    <ul>
-                        <li><a href="home.html">home</a></li>
-                        <!-- <li><a href="about.html">about developer</a></li> -->
-                        <li><a href="contact.html">contact developer</a></li>
-                      
-                    </ul>
-                </div>
+<div class="shell">
 
-                <div class="sidebar_menu">
-                    <div class="btn_2">
-                        <label for="checkbox">
-                            <i class="fa-solid fa-xmark"></i>
-                        </label>
-    
-    
-                    </div>
-                    <ul>
-                        <li><a href="home.html">home</a></li>
-                        <!-- <li><a href="about.html">about developer</a></li> -->
-                        <li><a href="contact.html">contact developer</a></li>
-                        
-                    </ul>
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10.5" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M7 14c1.2-3.5 4.5-5.5 7.5-3.5s4.5 1 4.5-2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="2" fill="currentColor" opacity="0.3"/>
+      </svg>
+      SkyCast
+    </a>
+    <input type="checkbox" id="nav-toggle" hidden/>
+    <ul class="nav-list">
+      <li><a href="index.html" class="nav-a">Home</a></li>
+      <li><a href="contact.html" class="nav-a active">Contact</a></li>
+    </ul>
+    <label for="nav-toggle" class="nav-burger"><i class="fa-solid fa-bars"></i></label>
+    <div class="nav-drawer">
+      <label for="nav-toggle" class="nav-close"><i class="fa-solid fa-xmark"></i></label>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
 
+  <div class="contact-hero anim" style="--d:0s">
+    <h1 class="contact-title">Let's Talk</h1>
+    <p class="contact-sub">Have feedback, ideas, or just want to say hi?</p>
+  </div>
 
-                </div>
+  <div class="contact-layout">
 
-
-
-            </div>
-
-        </div>
-        <div class="main">
-            
-                
-           <div class="contact"><h1>Contact Me</h1>
-            <p>Let's get in touch!</p></div>
-        
-            <section class="contact-section">
-                <div class="contact-form">
-                    <h2>Send a Message</h2>
-                    <form action="https://api.web3forms.com/submit" method="POST">
-
-                        
-                        <input type="hidden" name="access_key" value="641c167e-7d9c-4bbc-b722-0bf76bfadee9">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" placeholder="Your Name" required>
-        
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" placeholder="Your Email" required>
-        
-                        <label for="message">Message:</label>
-                        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
-        
-                        <button type="submit">Send Message</button>
-                    </form>
-                </div>
-        
-                <div class="contact-info">
-                    <h2>Contact Information</h2>
-                    <p>Email: singhyashvardhan582@gmail.com</p>
-                    <p>Phone: +91 9315976969</p>
-                    <p>Location: DELHI, INDIA</p>
-        
-                    <h3>Follow Me</h3>
-                    <div class="social-links">
-                        <!-- <a href="https://www.instagram.com/crickfreak.in/" target="_blank">Instagram</a> -->
-                        <a href="https://www.linkedin.com/in/yashvardhan-singh-2a237b244/" target="_blank">LinkedIn</a>
-                       
-                    </div>
-                </div>
-            </section>
-        
-            <!-- <section class="map">
-                <h2>Find Me</h2>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.579715441076!2d77.93548247515588!3d28.642355875659447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390b627d16706059%3A0x37b404ae68167396!2sJWRQ%2BW6%2C%20B.B.%20Nagar%2C%20Uttar%20Pradesh%20203402!5e0!3m2!1sen!2sin!4v1748062579493!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </section> -->
-
-        </div>
-        <div class="footer">
-            <div class="footer_message">
-                Feel free to review the project and let me know if we can schedule a time to discuss further.
-                Thank you for your time, and I look forward to connecting with you!
-
-
-            </div>
-
-
-        </div>
+    <div class="glass contact-form-card tilt-card anim" style="--d:.1s">
+      <div class="hc-shimmer"></div>
+      <h2 class="form-head">Send a Message</h2>
+      <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE"/>
+        <input type="hidden" name="subject" value="SkyCast Contact"/>
+        <div class="fg"><label for="cname">Name</label><input type="text" id="cname" name="name" placeholder="Your name" required/></div>
+        <div class="fg"><label for="cemail">Email</label><input type="email" id="cemail" name="email" placeholder="your@email.com" required/></div>
+        <div class="fg"><label for="cmsg">Message</label><textarea id="cmsg" name="message" rows="5" placeholder="What's on your mind…" required></textarea></div>
+        <button type="submit" class="send-btn ripple-btn"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+      </form>
     </div>
 
-    
-    
-    <script src="script.js"></script>
-</body>
-</html>
+    <div class="contact-aside">
+      <div class="glass info-block tilt-card anim" style="--d:.18s">
+        <div class="hc-shimmer"></div>
+        <h2 class="form-head">Developer</h2>
+        <p class="dev-name">Yashvardhan Singh</p>
+        <div class="info-line"><i class="fa-solid fa-envelope"></i><a href="/cdn-cgi/l/email-protection#35465c5b525d4c54465d435447515d545b000d07755258545c591b565a58"><span class="__cf_email__" data-cfemail="e2918b8c858a9b83918a948390868a838cd7dad0a2858f838b8ecc818d8f">[email&#160;protected]</span></a></div>
+        <div class="info-line"><i class="fa-solid fa-phone"></i><a href="tel:+919315976969">+91 9315976969</a></div>
+        <div class="info-line"><i class="fa-solid fa-location-dot"></i><span>Delhi, India</span></div>
+      </div>
+
+      <div class="glass socials-block tilt-card anim" style="--d:.26s">
+        <div class="hc-shimmer"></div>
+        <h2 class="form-head">Connect</h2>
+        <a href="https://www.linkedin.com/in/yashvardhan-singh-2a237b244/" target="_blank" class="soc-btn soc-li ripple-btn">
+          <i class="fa-brands fa-linkedin"></i><span>LinkedIn</span><i class="fa-solid fa-arrow-right soc-arr"></i>
+        </a>
+        <a href="https://github.com/yashvardhansingh-x5x" target="_blank" class="soc-btn soc-gh ripple-btn">
+          <i class="fa-brands fa-github"></i><span>GitHub</span><i class="fa-solid fa-arrow-right soc-arr"></i>
+        </a>
+      </div>
+
+      <div class="glass quote-block tilt-card anim" style="--d:.34s">
+        <div class="hc-shimmer"></div>
+        <i class="fa-solid fa-wind quote-icon"></i>
+        <p>"Not all those who wander are lost — some are just checking the forecast."</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="foot-inner">
+      <span>SkyCast &copy; 2025</span>
