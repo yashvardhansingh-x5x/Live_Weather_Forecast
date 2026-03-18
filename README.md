@@ -72,18 +72,7 @@ skycast/
 ├── home.html        # Main weather dashboard
 ├── contact.html     # Contact / developer info page
 ├── style.css        # All styles (glassmorphism, animations, themes, responsive)
-├── script.js        # All logic (API, canvas, gauges, compass, sparkline, etc.)
-└── images/          # Weather condition images (you provide these)
-    ├── clear.jpg
-    ├── cloud.jpg
-    ├── rain.gif
-    ├── drizzle.gif
-    ├── thunder.gif
-    ├── snow.gif
-    ├── mist.jpg
-    ├── haze.gif
-    ├── smoke.jpg
-    └── default.jpg
+└── script.js        # All logic (API, canvas, gauges, compass, sparkline, etc.)
 ```
 
 ---
@@ -196,14 +185,14 @@ Add your screenshots here after deployment.
 
 ## 🌐 Live Demo
 
-[Live Demo](https://YOUR_USERNAME.github.io/skycast)
+[Live Demo](https://yashvardhansingh-x5x.github.io/Live_Weather_Forecast/)
 
 ### Deploy to GitHub Pages in 30 seconds
 
 1. Push your code to a GitHub repo
 2. Go to **Settings → Pages**
 3. Set Source to `main` branch and `/ (root)` folder
-4. Click **Save** — your site is live at `https://YOUR_USERNAME.github.io/skycast`
+4. Click **Save** — your site is live at `https://yashvardhansingh-x5x.github.io/Live_Weather_Forecast/`
 
 ---
 
@@ -211,7 +200,7 @@ Add your screenshots here after deployment.
 
 ### Yashvardhan Singh
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yashvardhan-singh-2a237b244/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yashvardhan-singh-data/)
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:singhyashvardhan582@gmail.com)
 
 📍 Delhi, India — 📞 +91 9315976969
