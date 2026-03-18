@@ -82,8 +82,8 @@ skycast/
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/skycast.git
-cd skycast
+git clone https://github.com/yashvardhansingh-x5x/Live_Weather_Forecast.git
+cd Live_Weather_Forecast
 ```
 
 ### 2. Get a free API key
@@ -179,7 +179,8 @@ Or use the **Live Server** extension in VS Code for auto-reload.
 
 ## 📸 Screenshots
 
-Add your screenshots here after deployment.
+<img width="2560" height="1391" alt="Screenshot 2026-03-18 161142" src="https://github.com/user-attachments/assets/2369c64e-67e9-413f-b63d-45985276a727" />
+
 
 ---
 
